@@ -6,7 +6,7 @@
 
 As expected nothing works !
 
-It looks like Copilot is make errors to see if you can report them to it.
+It looks like Copilot is making errors to see if you can report them to it.
 
 By using Copilot you train the IA... That why it is free...
 
