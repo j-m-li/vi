@@ -32,6 +32,11 @@
 #include "vi.h"
 
 int main(int argc, char *argv[]) {
+	var obj;
+
+	obj = object__new();
+	dispose(obj);
+
 	print((var) "vi...");
 	return 0;
 }

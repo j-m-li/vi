@@ -187,7 +187,9 @@ var quit(void)
 
 var std_alloc(var size)
 {
-	return (var)malloc(size);
+	char *v = malloc(size);
+	memset(v, 0, size);
+	return (var)v;
 }
 
 var std_free(var mem)
@@ -196,3 +198,30 @@ var std_free(var mem)
 	return 0;
 }
 
+var dispose(var self_) 
+{
+	VIRTUAL(object, self_)->dispose(self_,
+		       	(var)(VIRTUAL(object, self_)->parent));
+	return std_free((var)self_);
+}
+
+/* object class */
+static var _object__dispose(var self_, var parent_)
+{
+	DISPOSE(self_, parent_);
+	print(VIRTUAL(object, self_)->cid);
+	print((var)" free'd\n");
+	return 0;
+}
+
+var object__new()
+{
+	static struct object__virtual call;
+	struct object *self;
+	call.parent = NULL;
+	call.cid = (var)"object";
+	call.dispose = _object__dispose;
+	self = (void*)std_alloc(sizeof(*self));
+	self->call = &call;
+	return (var)self;
+}
